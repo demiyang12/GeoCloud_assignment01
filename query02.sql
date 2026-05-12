@@ -20,29 +20,3 @@ SELECT
 FROM
   (SELECT COUNT(*) AS num_trips FROM indego.trips_2021_q3) AS t2021,
   (SELECT COUNT(*) AS num_trips FROM indego.trips_2022_q3) AS t2022;
-
-
-
-/*
-    If you want to get fancier here, you can cast the result to a string and
-    concatenate a '%' to the end. For example:
-
-        (10 + 3.2)::text || '%' AS perc_change
-
-    This uses the type casting (number to string) and string concatenation
-    operator (`||`, double pipes) that's essentially a `+` for strings.
-*/
-
-SELECT
-  CONCAT(
-    ROUND(
-      (
-        (CAST(t2022.num_trips AS numeric) - CAST(t2021.num_trips AS numeric))
-        / NULLIF(CAST(t2021.num_trips AS numeric), 0)
-      ) * 100
-    , 2),
-    '%'
-  ) AS perc_change
-FROM
-  (SELECT COUNT(*) AS num_trips FROM indego.trips_2021_q3) AS t2021,
-  (SELECT COUNT(*) AS num_trips FROM indego.trips_2022_q3) AS t2022;
