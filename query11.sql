@@ -9,7 +9,7 @@ SELECT
   ROUND(
     AVG(
       ST_Distance(
-        ST_SetSRID(s.geom, 4326)::geography,
+        s.geog,
         ST_SetSRID(ST_Point(-75.192584, 39.952415), 4326)::geography
       )
     ) / 1000.0
